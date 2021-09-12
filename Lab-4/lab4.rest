@@ -1,0 +1,44 @@
+PUT lab-index
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "lab_analyzer": {
+          "type": "standard",
+          "max_token_length": 5,
+          "stopwords": "_english_"
+        }
+      }
+    }
+  }
+}
+
+POST lab-index/_analyze
+{
+  "analyzer": "lab_analyzer",
+  "text": "It's no use going back to yesterday, because I was a different person then."
+}
+
+POST lab-index/lab/1
+{
+  "title" : "stick plant"
+}
+POST lab-index/lab/2
+{
+  "title" : "stick plant stick"
+}
+POST lab-index/lab/3
+{
+  "title" : "stick leafe plant root"
+}
+
+GET lab-index/lab/_search
+{
+  "explain" : "true",
+  "query": {
+    "match": {
+      "title": "stick plant"
+      }
+    }
+  }
+}
